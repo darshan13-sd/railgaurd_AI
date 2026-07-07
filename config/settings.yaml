@@ -1,0 +1,100 @@
+# =============================================================================
+# settings.yaml — RailGuard-AI Configuration
+# Edit this file to tune the system. No Python edits required.
+# =============================================================================
+
+paths:
+  fallen_tree_model: "models/best.pt"
+  coco_model: "yolo11s.pt"                 # auto-downloaded by ultralytics if missing
+  depth_model: "models/depth_anything.onnx"
+  track_seg_model: "models/track_seg.onnx"
+  input_video: "D:/Railway_Track/input_video.mp4"   # or just 0 for your default webcam
+  output_video: "D:/Railway_Track/output_railguard.mp4"
+  database: "database/events.db"
+
+yolo:
+  confidence_threshold: 0.35
+  nms_iou_threshold: 0.45
+  max_detections: 30
+  device: 0            # 0 for GPU (CUDA), "cpu" for CPU
+  img_size: 640
+
+coco_classes_of_interest:
+  1:  "Bicycle"
+  2:  "Car"
+  3:  "Motorcycle"
+  5:  "Bus"
+  7:  "Truck"
+  14: "Bird"
+  15: "Cat"
+  16: "Dog"
+  17: "Horse"
+  18: "Sheep"
+  19: "Cow"
+  20: "Elephant"
+  21: "Bear"
+  22: "Zebra"
+  23: "Giraffe"
+  24: "Backpack"
+  25: "Umbrella"
+  28: "Suitcase"
+
+track_segmentation:
+  conf_threshold: 0.5
+  detection_interval: 3        # run segmentation model every N frames
+
+smoothing:
+  alpha: 0.15
+  warmup_frames: 5
+  max_vertex_jump_px: 60
+
+merging:
+  cross_model_nms_iou_threshold: 0.50
+
+depth:
+  enabled: true
+  input_size: [518, 518]       # depth-anything ONNX input size
+
+tracking:
+  max_age_frames: 15           # frames to keep a lost track alive
+  max_match_distance_px: 120   # max centroid distance for matching
+
+speed:
+  smoothing_alpha: 0.3
+
+risk:
+  danger_threshold: 0.70
+  warning_threshold: 0.35
+  weight_roi_overlap: 0.5
+  weight_proximity: 0.3
+  weight_closing_speed: 0.2
+  ttc_danger_seconds: 3.0
+  ttc_warning_seconds: 6.0
+  danger_y_threshold_fraction: 0.60
+
+alerts:
+  voice_enabled: true
+  voice_cooldown_sec: 4.0
+  log_events_to_db: true
+
+viz:
+  roi_overlay_color: [0, 200, 80]
+  roi_overlay_alpha: 0.25
+  roi_border_color: [0, 255, 100]
+  roi_border_thickness: 2
+  danger_box_color: [0, 0, 255]
+  warning_box_color: [0, 165, 255]
+  safe_box_color: [0, 220, 0]
+  box_thickness: 2
+  font_scale_large: 0.9
+  font_scale_medium: 0.65
+  font_scale_small: 0.5
+  font_thickness: 2
+  status_clear_color: [0, 200, 0]
+  status_warning_color: [0, 200, 255]
+  status_danger_color: [0, 0, 255]
+
+performance:
+  track_processing_scale: 0.6
+  log_interval: 10
+  debug_mode: false
