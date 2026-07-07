@@ -1,0 +1,17 @@
+# Core CV / ML
+opencv-python>=4.9.0
+numpy>=1.26.0
+ultralytics>=8.3.0
+onnxruntime-gpu>=1.18.0   # swap for onnxruntime (CPU-only) if no CUDA GPU
+
+# Config
+PyYAML>=6.0.1
+
+# Voice alerts
+pyttsx3>=2.90
+
+# Dashboard
+streamlit>=1.36.0
+
+# Optional: for exporting/training custom models
+torch>=2.2.0
